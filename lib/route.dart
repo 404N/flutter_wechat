@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wechat/view/home_page.dart';
+import 'package:flutter_wechat/view/welcome_page.dart';
 
 
 ///配置路由
 Map<String, WidgetBuilder> routes = {
+  WelcomePage.sName: (context) {
+    return WelcomePage();
+  },
+  //首页
+  HomePage.sName: (context) {
+    return HomePage();
+  },
 };
 
 RouteFactory onGenerateRoute = (RouteSettings settings) {

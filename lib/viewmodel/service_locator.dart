@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 
+import 'home_viewmodel.dart';
+
 GetIt serviceLocator = GetIt.instance;
 
 void setupServiceLocator() {
@@ -11,9 +13,6 @@ void setupServiceLocator() {
   // // You can replace the actual services above with fake implementations during development.
   //
   // // view models
-  // serviceLocator.registerFactory<HomeIndexViewModel>(() => HomeIndexViewModel());
-  // serviceLocator.registerFactory<NoteViewModel>(() => NoteViewModel());
-  // serviceLocator.registerFactory<CalculateScreenViewModel>(() => CalculateScreenViewModel());
-  // serviceLocator.registerFactory<ChooseFavoritesViewModel>(() => ChooseFavoritesViewModel());
-  // serviceLocator.registerFactory<ColorsTransformViewModel>(() => ColorsTransformViewModel());
+  serviceLocator.registerFactory<HomeIndexViewModel>(() => HomeIndexViewModel());
+
 }
