@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wechat/view/home_page.dart';
+import 'package:flutter_wechat/view/login_page.dart';
 import 'package:flutter_wechat/view/welcome_page.dart';
 
 
@@ -7,6 +8,10 @@ import 'package:flutter_wechat/view/welcome_page.dart';
 Map<String, WidgetBuilder> routes = {
   WelcomePage.sName: (context) {
     return WelcomePage();
+  },
+  //登录页
+  LoginPage.sName: (context) {
+    return LoginPage();
   },
   //首页
   HomePage.sName: (context) {

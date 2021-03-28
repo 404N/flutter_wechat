@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wechat/utils/common/ScreenUtils.dart';
 
-
-class WJColors{
+class WJColors {
   static const int primaryIntValue = 0xFFF5F6F7;
 
   static const MaterialColor primarySwatch = const MaterialColor(
@@ -90,7 +90,6 @@ class WJColors{
   static const Color color_333333 = Color(0xFF333333);
   static const Color color_242625 = Color(0xFF242625);
 
-
   static const Color color_002E67 = Color(0xFF002E67);
   static const Color color_F8B400 = Color(0xFFF8B400);
   static const Color color_008DFF = Color(0xFF008DFF);
@@ -103,52 +102,57 @@ class WJColors{
 }
 
 class WjStyle {
-  static const lagerTextSize = 30.0;
-  static const bigTextSize = 23.0;
-  static const normalTextSize = 18.0;
-  static const middleTextSize = 16.0;
-  static const smallTextSize = 14.0;
-  static const minTextSize = 11.0;
-  static const bigText25 = 25.0;
-  static const size12 = 12.0;
-  static const size20 = 20.0;
-  static const size9 = 9.0;
-  static const size10 = 10.0;
-  static const size21 = 21.0;
-  static const size13 = 13.0;
-  static const size14 = 14.0;
-  static const size15 = 15.0;
-  static const size16 = 16.0;
-  static const size18 = 18.0;
-  static const size24 = 24.0;
-  static const size29 = 29.0;
-  static const size8 = 8.0;
+  static double lagerTextSize = 30.Sp;
+  static double bigTextSize = 23.Sp;
+  static double normalTextSize = 18.Sp;
+  static double middleTextSize = 16.Sp;
+  static double smallTextSize = 14.Sp;
+  static double minTextSize = 11.Sp;
+  static double bigText25 = 25.Sp;
+  static double size12 = 12.Sp;
+  static double size20 = 20.Sp;
+  static double size9 = 9.Sp;
+  static double size10 = 10.Sp;
+  static double size21 = 21.Sp;
+  static double size13 = 13.Sp;
+  static double size14 = 14.Sp;
+  static double size15 = 15.Sp;
+  static double size16 = 16.Sp;
+  static double size18 = 18.Sp;
+  static double size24 = 24.Sp;
+  static double size29 = 29.Sp;
+  static double size8 = 8.Sp;
 
+  static TextStyle loginStyle = TextStyle(
+    color: WJColors.color_121917,
+    fontSize: size29,
+    fontWeight: FontWeight.bold,
+  );
 
-  static const appBarStyle = TextStyle(
+  static TextStyle appBarStyle = TextStyle(
     color: WJColors.mainTextColor,
     fontSize: size18,
     fontWeight: FontWeight.bold,
   );
 
-  static const bookTitleStyle=TextStyle(
+  static TextStyle bookTitleStyle = TextStyle(
     color: WJColors.primaryDarkValue,
     fontSize: size12,
     fontWeight: FontWeight.bold,
   );
 
-  static const bookAuthorStyle=TextStyle(
+  static TextStyle bookAuthorStyle = TextStyle(
     color: WJColors.color_6F6F6F,
     fontSize: size8,
   );
 
-  static const colorsTransformTextStyle=TextStyle(
+  static TextStyle colorsTransformTextStyle = TextStyle(
     color: WJColors.white,
     fontSize: size16,
     fontWeight: FontWeight.bold,
   );
 
-  static const colorsTransformTopTextStyle=TextStyle(
+  static TextStyle colorsTransformTopTextStyle = TextStyle(
     color: WJColors.primaryDarkValue,
     fontSize: size16,
     fontWeight: FontWeight.bold,

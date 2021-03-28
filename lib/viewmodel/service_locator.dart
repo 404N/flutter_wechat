@@ -1,3 +1,4 @@
+import 'package:flutter_wechat/viewmodel/login_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 
 import 'home_viewmodel.dart';
@@ -14,5 +15,6 @@ void setupServiceLocator() {
   //
   // // view models
   serviceLocator.registerFactory<HomeIndexViewModel>(() => HomeIndexViewModel());
+  serviceLocator.registerFactory<LoginViewModel>(() => LoginViewModel());
 
 }

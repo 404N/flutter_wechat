@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wechat/utils/common/shared_preferences_utils.dart';
+import 'package:flutter_wechat/utils/common/storage_key.dart';
 import 'package:flutter_wechat/utils/style/white_jotter_style.dart';
+import 'package:flutter_wechat/view/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sp_util/sp_util.dart';
 
 import '../res.dart';
 import 'home_page.dart';
@@ -19,7 +24,12 @@ class _WelcomePageState extends State<WelcomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       Future.delayed(const Duration(milliseconds: 3000), () {
         if(!isJump){
-          Navigator.pushReplacementNamed(context, HomePage.sName);
+          SharedPreferenceUtils sp=SharedPreferenceUtils();
+          if(sp.getStorage(StorageKey.LOGIN_STATUS)!=null){
+            Navigator.pushReplacementNamed(context, HomePage.sName);
+          }else{
+            Navigator.pushReplacementNamed(context, LoginPage.sName);
+          }
         }
       });
     });
@@ -79,9 +89,15 @@ class _WelcomePageState extends State<WelcomePage> {
             "立刻进入",
             style: TextStyle(color: Colors.white),
           ),
-          onPressed: () {
+          onPressed: () async {
             isJump=true;
-            Navigator.pushReplacementNamed(context, HomePage.sName);
+            SharedPreferenceUtils sp=SharedPreferenceUtils();
+            dynamic status=await sp.getStorage(StorageKey.LOGIN_STATUS);
+            if(status!=null){
+              Navigator.pushReplacementNamed(context, HomePage.sName);
+            }else{
+              Navigator.pushReplacementNamed(context, LoginPage.sName);
+            }
           },
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
