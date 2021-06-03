@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 child: Center(
                   child: Text(
-                    "微信",
+                    "WeChat",
                     style: WjStyle.loginStyle,
                   ),
                 ),
@@ -67,9 +67,22 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Box.h10,
-              Container(
-                child: Center(
-                  child: Text("登录/注册"),
+              GestureDetector(
+                onTap: (){
+                  model.login(context);
+                },
+                child: Container(
+                  height: 60,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    color: WJColors.color_306BFF,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(25),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text("登录/注册"),
+                  ),
                 ),
               )
             ],

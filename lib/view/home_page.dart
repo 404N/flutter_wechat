@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wechat/generated/json/base/json_convert_content.dart';
+import 'package:flutter_wechat/model/login_res_model_entity.dart';
+import 'package:flutter_wechat/utils/common/storage_key.dart';
 import 'package:flutter_wechat/utils/common/wechat_Icons.dart';
 import 'package:flutter_wechat/view/finds/finds.dart';
 import 'package:flutter_wechat/view/friends/friends.dart';
@@ -10,6 +13,7 @@ import 'package:flutter_wechat/view/wechat/wechat.dart';
 import 'package:flutter_wechat/viewmodel/home_viewmodel.dart';
 import 'package:flutter_wechat/viewmodel/service_locator.dart';
 import 'package:provider/provider.dart';
+import 'package:sp_util/sp_util.dart';
 
 class HomePage extends StatefulWidget {
   static final String sName = "Home";
@@ -57,8 +61,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    if(SpUtil.getObject(StorageKey.HOME_DATA)!=null){
+      model.loginResModelEntity=JsonConvert.fromJsonAsT<LoginResModelEntity>(
+        SpUtil.getObject(StorageKey.HOME_DATA),
+      );
+    }
     tabBodies = [
-      WeChat(),
+      WeChat(contactVO: model.loginResModelEntity.contactVO,),
       Friends(),
       Finds(),
       Personal(),

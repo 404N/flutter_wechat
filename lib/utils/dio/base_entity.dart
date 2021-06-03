@@ -1,14 +1,26 @@
+import 'package:flutter_wechat/generated/json/base/json_convert_content.dart';
+
 class BaseEntity<T> {
 
-  int code;
-  String message;
-  T result;
+  String code;
+  String msg;
+  T data;
 
-  BaseEntity(this.code, this.message, this.result);
+  BaseEntity(this.code, this.msg, this.data);
 
   BaseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'] ?? json['Code'];
-    message = json['message'] ?? json['Message'];
-    result = json['result'] ?? json['Result'];
+    msg = json['msg'] ?? json['Msg'];
+    if (json.containsKey("data")) {
+      if (json['data'] == null || json['data'] == "") {
+        data = null;
+      } else if (T.toString() == "String") {
+        data = json["data"].toString() as T;
+      } else if (T.toString() == "Map<dynamic, dynamic>") {
+        data = json["data"] as T;
+      } else {
+        data = JsonConvert.fromJsonAsT(json["data"]);
+      }
+    }
   }
 }

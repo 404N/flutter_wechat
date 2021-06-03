@@ -1,5 +1,5 @@
 class Address {
-  static String host = "http://101.37.70.95:8080/";
+  static String host = "http://192.168.31.222:8081/";
 
   ///GET 按页获取笔记
   static String getNote(int size, int page) {
@@ -8,5 +8,9 @@ class Address {
 
   static String getBooks() {
     return "api/books";
+  }
+
+  static String login() {
+    return "api/login";
   }
 }

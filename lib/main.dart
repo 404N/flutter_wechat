@@ -11,6 +11,7 @@ import 'package:sp_util/sp_util.dart';
 import 'app.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setupServiceLocator();
   SpUtil.getInstance();
   DioUtil.initInstance();

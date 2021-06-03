@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.0.0
   sp_util: ^2.0.3
   flutter_screenutil: ^4.0.4
+  fluttertoast: ^7.0.0
 
 dev_dependencies:
   flutter_test:
