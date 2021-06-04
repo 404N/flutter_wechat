@@ -9,7 +9,7 @@ import 'package:flutter_wechat/utils/common/wechat_Icons.dart';
 import 'package:flutter_wechat/view/finds/finds.dart';
 import 'package:flutter_wechat/view/friends/friends.dart';
 import 'package:flutter_wechat/view/person/personal.dart';
-import 'package:flutter_wechat/view/wechat/wechat.dart';
+import 'package:flutter_wechat/view/wechat/wechat_page.dart';
 import 'package:flutter_wechat/viewmodel/home_viewmodel.dart';
 import 'package:flutter_wechat/viewmodel/service_locator.dart';
 import 'package:provider/provider.dart';
