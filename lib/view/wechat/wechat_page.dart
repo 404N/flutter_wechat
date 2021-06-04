@@ -63,6 +63,9 @@ class _WeChatState extends State<WeChat> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                model.contactVO.contactInfoList[index].convUnread=0;
+                                setState(() {
+                                });
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
