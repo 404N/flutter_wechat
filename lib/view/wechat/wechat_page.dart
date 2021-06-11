@@ -11,8 +11,8 @@ import 'package:provider/provider.dart';
 
 class WeChat extends StatefulWidget {
   final LoginResModelContactVO contactVO;
-
-  const WeChat({Key key, this.contactVO}) : super(key: key);
+  final int uid;
+  const WeChat({Key key, this.contactVO, this.uid}) : super(key: key);
 
   @override
   _WeChatState createState() => _WeChatState();
@@ -24,7 +24,12 @@ class _WeChatState extends State<WeChat> {
   @override
   void initState() {
     super.initState();
-    model.contactVO = widget.contactVO;
+    if(widget.contactVO!=null){
+      model.contactVO = widget.contactVO;
+      model.uid=widget.uid;
+    }else{
+      model.uid=widget.uid;
+    }
     model.init();
   }
 
@@ -71,7 +76,7 @@ class _WeChatState extends State<WeChat> {
                                   MaterialPageRoute(
                                     builder: (_) {
                                       return ChatPage(
-                                        ownerUid: widget.contactVO.ownerUid,
+                                        ownerUid: model.contactVO.ownerUid,
                                         otherUid: model.contactVO
                                             .contactInfoList[index].otherUid,
                                         title: model.contactVO

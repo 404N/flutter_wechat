@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wechat/generated/json/base/json_convert_content.dart';
 import 'package:flutter_wechat/model/login_res_model_entity.dart';
+import 'package:flutter_wechat/model/user_entity.dart';
 import 'package:flutter_wechat/utils/common/storage_key.dart';
 import 'package:flutter_wechat/utils/common/wechat_Icons.dart';
 import 'package:flutter_wechat/view/finds/finds.dart';
@@ -61,13 +62,25 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    if(SpUtil.getObject(StorageKey.HOME_DATA)!=null){
-      model.loginResModelEntity=JsonConvert.fromJsonAsT<LoginResModelEntity>(
+    if (SpUtil.getObject(StorageKey.HOME_DATA) != null) {
+      model.loginResModelEntity = JsonConvert.fromJsonAsT<LoginResModelEntity>(
         SpUtil.getObject(StorageKey.HOME_DATA),
       );
     }
+    if (SpUtil.getObject(StorageKey.USER_INFO) != null) {
+      model.userEntity = JsonConvert.fromJsonAsT<UserEntity>(
+        SpUtil.getObject(StorageKey.USER_INFO),
+      );
+    }
     tabBodies = [
-      WeChat(contactVO: model.loginResModelEntity.contactVO,),
+      model.loginResModelEntity == null
+          ? WeChat(
+              uid: model.userEntity.uid,
+            )
+          : WeChat(
+              contactVO: model.loginResModelEntity.contactVO,
+              uid: model.userEntity.uid,
+            ),
       Friends(),
       Finds(),
       Personal(),

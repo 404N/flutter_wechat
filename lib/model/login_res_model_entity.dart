@@ -1,17 +1,8 @@
 import 'package:flutter_wechat/generated/json/base/json_convert_content.dart';
 
 class LoginResModelEntity with JsonConvert<LoginResModelEntity> {
-	LoginResModelLoginUser loginUser;
 	List<LoginResModelOtherUsers> otherUsers;
 	LoginResModelContactVO contactVO;
-}
-
-class LoginResModelLoginUser with JsonConvert<LoginResModelLoginUser> {
-	int uid;
-	String username;
-	String password;
-	String email;
-	String avatar;
 }
 
 class LoginResModelOtherUsers with JsonConvert<LoginResModelOtherUsers> {

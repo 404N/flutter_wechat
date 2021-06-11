@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wechat/model/login_res_model_entity.dart';
+import 'package:flutter_wechat/model/user_entity.dart';
 import 'package:flutter_wechat/utils/common/storage_key.dart';
 import 'package:flutter_wechat/utils/dio/address.dart';
 import 'package:flutter_wechat/utils/dio/dio_util.dart';
@@ -12,14 +13,14 @@ class LoginViewModel extends ChangeNotifier {
   TextEditingController password = TextEditingController();
 
   void login(BuildContext context) {
-    DioUtil.request<LoginResModelEntity>(
+    DioUtil.request<UserEntity>(
       Address.login(),
       RequestMethod.POST,
       data: FormData.fromMap(
         {"email": userName.text, "password": password.text},
       ),
       onSuccess: (data){
-        SpUtil.putObject(StorageKey.HOME_DATA, data);
+      SpUtil.putObject(StorageKey.USER_INFO, data);
         Navigator.pushReplacementNamed(context, HomePage.sName);
       },
       onError: (code, msg){

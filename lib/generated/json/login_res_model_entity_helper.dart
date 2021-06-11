@@ -1,9 +1,6 @@
 import 'package:flutter_wechat/model/login_res_model_entity.dart';
 
 loginResModelEntityFromJson(LoginResModelEntity data, Map<String, dynamic> json) {
-	if (json['loginUser'] != null) {
-		data.loginUser = LoginResModelLoginUser().fromJson(json['loginUser']);
-	}
 	if (json['otherUsers'] != null) {
 		data.otherUsers = (json['otherUsers'] as List).map((v) => LoginResModelOtherUsers().fromJson(v)).toList();
 	}
@@ -15,40 +12,8 @@ loginResModelEntityFromJson(LoginResModelEntity data, Map<String, dynamic> json)
 
 Map<String, dynamic> loginResModelEntityToJson(LoginResModelEntity entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
-	data['loginUser'] = entity.loginUser?.toJson();
 	data['otherUsers'] =  entity.otherUsers?.map((v) => v.toJson())?.toList();
 	data['contactVO'] = entity.contactVO?.toJson();
-	return data;
-}
-
-loginResModelLoginUserFromJson(LoginResModelLoginUser data, Map<String, dynamic> json) {
-	if (json['uid'] != null) {
-		data.uid = json['uid'] is String
-				? int.tryParse(json['uid'])
-				: json['uid'].toInt();
-	}
-	if (json['username'] != null) {
-		data.username = json['username'].toString();
-	}
-	if (json['password'] != null) {
-		data.password = json['password'].toString();
-	}
-	if (json['email'] != null) {
-		data.email = json['email'].toString();
-	}
-	if (json['avatar'] != null) {
-		data.avatar = json['avatar'].toString();
-	}
-	return data;
-}
-
-Map<String, dynamic> loginResModelLoginUserToJson(LoginResModelLoginUser entity) {
-	final Map<String, dynamic> data = new Map<String, dynamic>();
-	data['uid'] = entity.uid;
-	data['username'] = entity.username;
-	data['password'] = entity.password;
-	data['email'] = entity.email;
-	data['avatar'] = entity.avatar;
 	return data;
 }
 
