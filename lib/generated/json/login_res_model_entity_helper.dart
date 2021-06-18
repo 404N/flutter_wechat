@@ -19,9 +19,7 @@ Map<String, dynamic> loginResModelEntityToJson(LoginResModelEntity entity) {
 
 loginResModelOtherUsersFromJson(LoginResModelOtherUsers data, Map<String, dynamic> json) {
 	if (json['uid'] != null) {
-		data.uid = json['uid'] is String
-				? int.tryParse(json['uid'])
-				: json['uid'].toInt();
+		data.uid = json['uid'].toString();
 	}
 	if (json['username'] != null) {
 		data.username = json['username'].toString();
@@ -50,9 +48,7 @@ Map<String, dynamic> loginResModelOtherUsersToJson(LoginResModelOtherUsers entit
 
 loginResModelContactVOFromJson(LoginResModelContactVO data, Map<String, dynamic> json) {
 	if (json['ownerUid'] != null) {
-		data.ownerUid = json['ownerUid'] is String
-				? int.tryParse(json['ownerUid'])
-				: json['ownerUid'].toInt();
+		data.ownerUid = json['ownerUid'].toString();
 	}
 	if (json['ownerAvatar'] != null) {
 		data.ownerAvatar = json['ownerAvatar'].toString();
@@ -61,9 +57,7 @@ loginResModelContactVOFromJson(LoginResModelContactVO data, Map<String, dynamic>
 		data.ownerName = json['ownerName'].toString();
 	}
 	if (json['totalUnread'] != null) {
-		data.totalUnread = json['totalUnread'] is String
-				? int.tryParse(json['totalUnread'])
-				: json['totalUnread'].toInt();
+		data.totalUnread = json['totalUnread'].toString();
 	}
 	if (json['contactInfoList'] != null) {
 		data.contactInfoList = (json['contactInfoList'] as List).map((v) => LoginResModelContactVOContactInfoList().fromJson(v)).toList();
@@ -83,9 +77,7 @@ Map<String, dynamic> loginResModelContactVOToJson(LoginResModelContactVO entity)
 
 loginResModelContactVOContactInfoListFromJson(LoginResModelContactVOContactInfoList data, Map<String, dynamic> json) {
 	if (json['otherUid'] != null) {
-		data.otherUid = json['otherUid'] is String
-				? int.tryParse(json['otherUid'])
-				: json['otherUid'].toInt();
+		data.otherUid = json['otherUid'].toString();
 	}
 	if (json['otherName'] != null) {
 		data.otherName = json['otherName'].toString();

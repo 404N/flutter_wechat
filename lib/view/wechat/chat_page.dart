@@ -5,21 +5,23 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_wechat/model/group_msg_vo.dart';
 import 'package:flutter_wechat/model/massage_vo.dart';
 import 'package:flutter_wechat/utils/dio/address.dart';
 import 'package:flutter_wechat/utils/event_bus.dart';
 import 'package:flutter_wechat/utils/style/Box.dart';
 import 'package:flutter_wechat/utils/style/white_jotter_style.dart';
 import 'package:flutter_wechat/utils/websocket_util.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChatPage extends StatefulWidget {
-  final int ownerUid;
-  final int otherUid;
+  final String ownerUid;
+  final String otherUid; //群号或者对方id
   final String title;
+  final int type; //0表示私聊，1表示群聊
+  final int mid;
 
-  const ChatPage({Key key, this.otherUid, this.ownerUid, this.title})
+  const ChatPage(
+      {Key key, this.otherUid, this.ownerUid, this.title, this.type, this.mid})
       : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class _ChatPageState extends State<ChatPage> {
   TextEditingController controller;
   ScrollController _scrollController;
   List<MessageVo> msgList = [];
+  List<GroupMsgVo> groupMsgList = [];
   var _eventBusOn;
 
   @override
@@ -39,20 +42,22 @@ class _ChatPageState extends State<ChatPage> {
     _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _eventBusOn = eventBus.on<ApplicationExitEvent>().listen((event) {
-        if (mounted&&event.data != null) {
+        if (mounted && event.data != null) {
           switch (event.data['type']) {
             case 2:
               //接收查询的消息接口
-              if (event.data['data'] is List) {
-                getMsg(event.data['data']);
+              if (widget.type == 0) {
+                if (event.data['data'] is List) {
+                  getMsg(event.data['data']);
+                }
+                _scrollController.jumpTo(0);
+                setState(() {});
               }
-              _scrollController.jumpTo(0);
-              setState(() {});
               break;
             case 3:
               //发消息
               MessageVo messageVo = MessageVo.fromJson(event.data['data']);
-              messageVo.type=0;
+              messageVo.type = 0;
               setState(() {
                 msgList.insert(0, messageVo);
               });
@@ -60,11 +65,34 @@ class _ChatPageState extends State<ChatPage> {
               break;
             case 4:
               MessageVo messageVo = MessageVo.fromJson(event.data['data']);
-              messageVo.type=1;
-              messageVo.otherUidAvatar=messageVo.ownerUidAvatar;
-              messageVo.otherName=messageVo.ownerName;
+              messageVo.type = 1;
+              messageVo.otherUidAvatar = messageVo.ownerUidAvatar;
+              messageVo.otherName = messageVo.ownerName;
               setState(() {
                 msgList.insert(0, messageVo);
+              });
+              _scrollController.jumpTo(0);
+              break;
+            case 100:
+              if (widget.type == 1) {
+                if (event.data['data'] is List) {
+                  getGroupMsg(event.data['data']);
+                }
+                _scrollController.jumpTo(0);
+                setState(() {});
+              }
+              break;
+            case 101:
+              GroupMsgVo groupMsgVo = GroupMsgVo.fromJson(event.data['data']);
+              setState(() {
+                groupMsgList.insert(0, groupMsgVo);
+              });
+              _scrollController.jumpTo(0);
+              break;
+            case 102:
+              GroupMsgVo groupMsgVo = GroupMsgVo.fromJson(event.data['data']);
+              setState(() {
+                groupMsgList.insert(0, groupMsgVo);
               });
               _scrollController.jumpTo(0);
               break;
@@ -74,12 +102,21 @@ class _ChatPageState extends State<ChatPage> {
         }
       });
     });
-
-    var queryMsgJson = '{ "type": 2, "data": {"ownerUid":' +
-        widget.ownerUid.toString() +
-        ',"otherUid":' +
-        widget.otherUid.toString() +
-        ' }}';
+    var queryMsgJson;
+    if (widget.type == 0) {
+      queryMsgJson = '{ "type": 2, "data": {"ownerUid":' +
+          widget.ownerUid.toString() +
+          ',"otherUid":' +
+          widget.otherUid.toString() +
+          ' }}';
+    } else {
+      queryMsgJson = '{ "type": 100, "data": {"groupId":' +
+          widget.otherUid.toString() +
+          ',"type":0,' +
+          "page:" +
+          "0" +
+          ',}}';
+    }
     WebSocketUtility().sendMessage(queryMsgJson);
   }
 
@@ -115,9 +152,15 @@ class _ChatPageState extends State<ChatPage> {
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (context, index) {
-                                return _buildMsg(msgList[index]);
+                                if (widget.type == 0) {
+                                  return _buildMsg(msgList[index]);
+                                } else {
+                                  return _buildGroupMsg(groupMsgList[index]);
+                                }
                               },
-                              childCount: msgList.length,
+                              childCount: widget.type == 0
+                                  ? msgList.length
+                                  : groupMsgList.length,
                             ),
                           ),
                         ],
@@ -316,6 +359,99 @@ class _ChatPageState extends State<ChatPage> {
         ));
   }
 
+  // 构建消息视图
+  Widget _buildGroupMsg(GroupMsgVo entity) {
+    if (entity == null) {
+      return Container();
+    }
+    if (entity.ownerUid == widget.ownerUid) {
+      return Container(
+          margin: EdgeInsets.only(left: 15, top: 15, bottom: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(right: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "${entity.ownerName}",
+                      ),
+                      Box.h5,
+                      Text(
+                        entity.content ?? '',
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  right: 15.0,
+                ),
+                child: ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: Address.host + "images/" + entity.avatar,
+                    errorWidget: (context, url, error) =>
+                        CircularProgressIndicator(),
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+          ));
+    }
+    return Container(
+        margin: EdgeInsets.only(left: 15, top: 15, bottom: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                right: 15.0,
+              ),
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: Address.host + "images/" + entity.avatar,
+                  errorWidget: (context, url, error) =>
+                      CircularProgressIndicator(),
+                  width: 40,
+                  height: 40,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(right: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${entity.ownerName}",
+                    ),
+                    Box.h5,
+                    Text(
+                      entity.content ?? '',
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
+
   double _calculateMsgHeight(
       BuildContext context, BoxConstraints constraints, MessageVo entity) {
     return 2 +
@@ -365,13 +501,31 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void sendMsg() {
-    var sendMsgJson = '{ "type": 3, "data": {"senderUid":' +
-        widget.ownerUid.toString() +
-        ',"recipientUid":' +
-        widget.otherUid.toString() +
-        ', "content":"' +
-        controller.text +
-        '","msgType":1  }}';
+    var sendMsgJson;
+    if (widget.type == 0) {
+      sendMsgJson = '{ "type": 3, "data": {"senderUid":' +
+          widget.ownerUid.toString() +
+          ',"recipientUid":' +
+          widget.otherUid.toString() +
+          ', "content":"' +
+          controller.text +
+          '","msgType":1  }}';
+    } else {
+      sendMsgJson = '{ "type": 101, "data": {"senderUid":' +
+          widget.ownerUid.toString() +
+          ',"groupId":' +
+          widget.otherUid.toString() +
+          ', "content":"' +
+          controller.text +
+          '","msgType":1  }}';
+    }
     WebSocketUtility().sendMessage(sendMsgJson);
+  }
+
+  void getGroupMsg(List data) {
+    for (var msg in data) {
+      groupMsgList.insert(0, GroupMsgVo.fromJson(msg));
+    }
+    setState(() {});
   }
 }

@@ -99,7 +99,7 @@ class WebSocketUtility {
   }
 
   /// 初始化心跳
-  void initHeartBeat(int sendId) {
+  void initHeartBeat(String sendId) {
     destroyHeartBeat();
     _heartBeat = Timer.periodic(Duration(seconds: _heartTimes), (timer) {
       sentHeart(sendId);
@@ -107,8 +107,8 @@ class WebSocketUtility {
   }
 
   /// 心跳
-  void sentHeart(int sendId) {
-    var sendMsgJson = '{ "type": 0, "data": {"uid":' + sendId.toString() + ',"timeout": 120000}}';
+  void sentHeart(String sendId) {
+    var sendMsgJson = '{ "type": 0, "data": {"uid":' + sendId + ',"timeout": 120000}}';
     sendMessage(sendMsgJson);
   }
 

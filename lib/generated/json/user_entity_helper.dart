@@ -2,9 +2,7 @@ import 'package:flutter_wechat/model/user_entity.dart';
 
 userEntityFromJson(UserEntity data, Map<String, dynamic> json) {
 	if (json['uid'] != null) {
-		data.uid = json['uid'] is String
-				? int.tryParse(json['uid'])
-				: json['uid'].toInt();
+		data.uid = json['uid'].toString();
 	}
 	if (json['username'] != null) {
 		data.username = json['username'].toString();

@@ -6,7 +6,7 @@ class LoginResModelEntity with JsonConvert<LoginResModelEntity> {
 }
 
 class LoginResModelOtherUsers with JsonConvert<LoginResModelOtherUsers> {
-	int uid;
+	String uid;
 	String username;
 	String password;
 	String email;
@@ -14,15 +14,15 @@ class LoginResModelOtherUsers with JsonConvert<LoginResModelOtherUsers> {
 }
 
 class LoginResModelContactVO with JsonConvert<LoginResModelContactVO> {
-	int ownerUid;
+	String ownerUid;
 	String ownerAvatar;
 	String ownerName;
-	int totalUnread;
+	String totalUnread;
 	List<LoginResModelContactVOContactInfoList> contactInfoList;
 }
 
 class LoginResModelContactVOContactInfoList with JsonConvert<LoginResModelContactVOContactInfoList> {
-	int otherUid;
+	String otherUid;
 	String otherName;
 	String otherAvatar;
 	int mid;

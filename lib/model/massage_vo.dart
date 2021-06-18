@@ -23,9 +23,9 @@ class MessageVo {
 
   int mid;
   String content;
-  int ownerUid;
+  String ownerUid;
   int type;
-  int otherUid;
+  String otherUid;
   String createTime;
   String ownerUidAvatar;
   String otherUidAvatar;
@@ -35,9 +35,9 @@ class MessageVo {
   factory MessageVo.fromJson(Map<String, dynamic> jsonRes) => MessageVo(
     mid: asT<int>(jsonRes['mid']),
     content: asT<String>(jsonRes['content']),
-    ownerUid: asT<int>(jsonRes['ownerUid']),
+    ownerUid: asT<String>(jsonRes['ownerUid']),
     type: asT<int>(jsonRes['type']),
-    otherUid: asT<int>(jsonRes['otherUid']),
+    otherUid: asT<String>(jsonRes['otherUid']),
     createTime: asT<String>(jsonRes['createTime']),
     ownerUidAvatar: asT<String>(jsonRes['ownerUidAvatar']),
     otherUidAvatar: asT<String>(jsonRes['otherUidAvatar']),

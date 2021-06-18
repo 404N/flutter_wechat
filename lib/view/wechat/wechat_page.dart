@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class WeChat extends StatefulWidget {
   final LoginResModelContactVO contactVO;
-  final int uid;
+  final String uid;
   const WeChat({Key key, this.contactVO, this.uid}) : super(key: key);
 
   @override
@@ -81,6 +81,8 @@ class _WeChatState extends State<WeChat> {
                                             .contactInfoList[index].otherUid,
                                         title: model.contactVO
                                             .contactInfoList[index].otherName,
+                                        type: model.contactVO.contactInfoList[index].type>1?1:0,
+                                        mid: model.contactVO.contactInfoList[index].mid,
                                       );
                                     },
                                   ),
@@ -98,7 +100,7 @@ class _WeChatState extends State<WeChat> {
                                 thickness: 0.5,
                                 color: WJColors.line_color,
                               ),
-                            )
+                            ),
                           ],
                         );
                       },
