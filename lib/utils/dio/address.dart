@@ -14,4 +14,12 @@ class Address {
   static String login() {
     return "api/login";
   }
+
+  static String queryUser() {
+    return "api/queryUser";
+  }
+
+  static String addFriend() {
+    return "api/addFriend";
+  }
 }

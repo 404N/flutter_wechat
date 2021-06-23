@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         WeChatIcons.my,
       ),
       label: '我',
-    )
+    ),
   ];
 
   List<Widget> tabBodies;
@@ -72,16 +72,18 @@ class _HomePageState extends State<HomePage> {
         SpUtil.getObject(StorageKey.USER_INFO),
       );
     }
+    model.init();
     tabBodies = [
       model.loginResModelEntity == null
           ? WeChat(
-              uid: model.userEntity.uid,
             )
           : WeChat(
               contactVO: model.loginResModelEntity.contactVO,
-              uid: model.userEntity.uid,
             ),
-      Friends(),
+      Friends(
+        userList: model.loginResModelEntity.otherUsers,
+        newFriends: model.loginResModelEntity.addFriendRequestList,
+      ),
       Finds(),
       Personal(),
     ];

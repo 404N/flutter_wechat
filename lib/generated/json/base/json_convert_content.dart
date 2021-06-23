@@ -23,6 +23,8 @@ class JsonConvert<T> {
 				return userEntityFromJson(data as UserEntity, json) as T;
 			case LoginResModelEntity:
 				return loginResModelEntityFromJson(data as LoginResModelEntity, json) as T;
+			case AddFriendRequest:
+				return addFriendRequestFromJson(data as AddFriendRequest, json) as T;
 			case LoginResModelOtherUsers:
 				return loginResModelOtherUsersFromJson(data as LoginResModelOtherUsers, json) as T;
 			case LoginResModelContactVO:
@@ -38,6 +40,8 @@ class JsonConvert<T> {
 				return userEntityToJson(data as UserEntity);
 			case LoginResModelEntity:
 				return loginResModelEntityToJson(data as LoginResModelEntity);
+			case AddFriendRequest:
+				return addFriendRequestToJson(data as AddFriendRequest);
 			case LoginResModelOtherUsers:
 				return loginResModelOtherUsersToJson(data as LoginResModelOtherUsers);
 			case LoginResModelContactVO:
@@ -54,6 +58,8 @@ class JsonConvert<T> {
 			return UserEntity().fromJson(json);
 		}	else if(type == (LoginResModelEntity).toString()){
 			return LoginResModelEntity().fromJson(json);
+		}	else if(type == (AddFriendRequest).toString()){
+			return AddFriendRequest().fromJson(json);
 		}	else if(type == (LoginResModelOtherUsers).toString()){
 			return LoginResModelOtherUsers().fromJson(json);
 		}	else if(type == (LoginResModelContactVO).toString()){
@@ -70,6 +76,8 @@ class JsonConvert<T> {
 			return data.map<UserEntity>((e) => UserEntity().fromJson(e)).toList() as M;
 		}	else if(<LoginResModelEntity>[] is M){
 			return data.map<LoginResModelEntity>((e) => LoginResModelEntity().fromJson(e)).toList() as M;
+		}	else if(<AddFriendRequest>[] is M){
+			return data.map<AddFriendRequest>((e) => AddFriendRequest().fromJson(e)).toList() as M;
 		}	else if(<LoginResModelOtherUsers>[] is M){
 			return data.map<LoginResModelOtherUsers>((e) => LoginResModelOtherUsers().fromJson(e)).toList() as M;
 		}	else if(<LoginResModelContactVO>[] is M){

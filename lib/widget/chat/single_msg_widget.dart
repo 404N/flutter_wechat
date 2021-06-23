@@ -12,9 +12,9 @@ class SingleMsgWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Address.host + "images/" + info.otherAvatar);
     return Container(
       color: WJColors.white,
+      height: 70,
       child: Row(
         children: [
           Container(
@@ -76,7 +76,6 @@ class SingleMsgWidget extends StatelessWidget {
               ],
             ),
           ),
-          Box.w10,
         ],
       ),
     );
